@@ -1,10 +1,10 @@
-# SAMANVAYA Phase 1 Living Spec
+# SAMANVAYA Phase 2 Living Spec
 
 ## Product
 SAMANVAYA is a government-grade AYUSH academia–industry skill exchange prototype. It is built around one conceptual AYUSH Skill Graph and the loop: Assess → Match → Mentor → Work → Verify → Grow.
 
-## Phase 1 boundary
-The current build is a frontend-only demo with mock data. Authentication, persistence, employer verification, credential verification, analytics, Ministry data, DigiLocker/APAAR/ABC/ONEST/Beckn/Bhashini and real submissions are not connected. These are marked demo or integration-ready in the UI.
+## Phase 2 boundary
+Authentication, opportunity/application/internship persistence and adaptive Pariksha assessment run through FastAPI + PostgreSQL. Employer verification, credential verification, Ministry data, DigiLocker/APAAR/ABC/ONEST/Beckn/Bhashini and production notifications remain demo or integration-ready.
 
 ## Demo personas
 - Student: Ananya Sharma, BAMS final year
@@ -20,7 +20,10 @@ The current build is a frontend-only demo with mock data. Authentication, persis
 - Role switcher previews employer, alumni, institution and ministry dashboards with aggregate mock analytics
 
 ## Data model
-Mock frontend data in `frontend/src/data/mock.ts` includes opportunities, alumni, sessions, role personas, skill readiness, demand signals and dashboard metrics. Backend remains on the template status endpoints for infrastructure smoke testing.
+PostgreSQL tables: users, sessions, opportunities, applications, internships, assessment_results and status_checks. Demo fallback data remains in `frontend/src/data/mock.ts` for the public `/demo/*` experience. Auth sessions are random httpOnly cookies with seven-day expiry. Passwords are PBKDF2-SHA256 hashed server-side.
 
 ## Auth and roles
-No login is implemented in Phase 1. Demo persona selection is a UI-only role switcher. Real role-based sessions are Phase 2 dependencies.
+Seeded email/password accounts exist for student, employer, alumni/mentor, institution and ministry roles. `/app/*` is protected by server-validated sessions; `/demo/*` remains the clearly labelled mock persona experience.
+
+## Assessment
+Pariksha has a 12-question question bank across clinical, AYUSH knowledge, communication, digital, industry and research domains. Submissions compute domain readiness, gaps and recommendations and persist the latest result for the signed-in student.

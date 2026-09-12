@@ -7,11 +7,11 @@ import MetricCard from "@/components/MetricCard";
 import OpportunityCard from "@/components/OpportunityCard";
 import { alumni, metrics, opportunities, skillDemand, skillReadiness, type Role } from "@/data/mock";
 
-export default function Platform({ role }: { role: Role }) {
+export default function Platform({ role, mode = "demo" }: { role: Role; mode?: "demo" | "real" }) {
   const [activeRole, setActiveRole] = useState<Role>(role);
   const location = useLocation();
   const slug = location.pathname.split("/").pop() ?? "overview";
-  return <DashboardShell role={activeRole} onRoleChange={setActiveRole}>
+  return <DashboardShell role={activeRole} mode={mode} onRoleChange={mode === "demo" ? setActiveRole : undefined}>
     {activeRole === "student" ? <StudentView slug={slug} /> : <RoleView role={activeRole} slug={slug} />}
   </DashboardShell>;
 }

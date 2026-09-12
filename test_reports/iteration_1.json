@@ -1,0 +1,93 @@
+{
+  "iteration": 1,
+  "summary": "Verified all 7 acceptance criteria for the SAMANVAYA Phase 2 slice (auth, protected role routing, persistent opportunities/applications, Pariksha assessment, all 5 seeded role logins, demo mode, public opportunity discovery). 4 backend pytest files (8 assertions) + 7 named browser checks, all passing.",
+  "passed": 11,
+  "failed": 0,
+  "retest_needed": false,
+  "checks": [
+    {
+      "criterion": "A seeded student can log in and access the protected student workspace",
+      "name": "test_tscheck_auth_login.py",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "POST /api/auth/login (student@demo.samanvaya.in) -> 200 {user.role: student, user.name: Ananya Sharma}; GET /api/auth/me -> 200 role=student; wrong password -> 401; no cookie -> 401; logout -> 204 then /me -> 401"
+    },
+    {
+      "criterion": "A seeded student can log in and access the protected student workspace",
+      "name": "student-login-workspace",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Login form submit redirected to /app/student; authenticated-student-workspace visible; workspace-session-summary shows 'Ananya Sharma · student'"
+    },
+    {
+      "criterion": "Protected routes enforce authenticated role-based sessions",
+      "name": "protected-route-role-enforcement",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Unauth GET /app/student redirected to /login?next=%2Fapp%2Fstudent; employer session visiting /app/student redirected to /app/employer (no student workspace rendered); sidebar-logout-button returns to /login"
+    },
+    {
+      "criterion": "Persistent opportunities and applications work end to end",
+      "name": "test_tscheck_opportunities_apply.py",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "POST /api/opportunities/panchakarma-clinic/apply -> 201/200, idempotent re-apply returns same id; GET /api/applications/me and /api/internships/me include the new record; employer role apply -> 403"
+    },
+    {
+      "criterion": "Persistent opportunities and applications work end to end",
+      "name": "opportunities-application-persistence",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Applied to panchakarma-clinic from /app/student, button switched to 'Application saved'; after page reload the application record and internship milestone tracker remained visible (PostgreSQL-backed)"
+    },
+    {
+      "criterion": "Pariksha adaptive assessment works and persists results",
+      "name": "test_tscheck_assessment_submit.py",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "GET /api/assessments/questions -> 12 questions; POST /api/assessments/submit (all correct) -> 200 readiness=100, skill_scores populated, gaps=[]; GET /api/assessments/latest -> same result id persisted"
+    },
+    {
+      "criterion": "Pariksha adaptive assessment works and persists results",
+      "name": "pariksha-assessment-flow",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Completed all 12 questions via UI, submitted, assessment-result-page rendered with readiness/domain-breakdown/gaps/recommendations sections and no console/request errors"
+    },
+    {
+      "criterion": "Each supported role has a working seeded login",
+      "name": "test_tscheck_role_logins.py",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "employer/alumni/institution/ministry seeded accounts each POST /api/auth/login -> 200 with matching user.role, confirmed again via GET /api/auth/me"
+    },
+    {
+      "criterion": "Each supported role has a working seeded login",
+      "name": "role-logins-each-workspace",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Each of employer/alumni/institution/ministry logged in via UI, landed on /app/<role> with the matching {role}-dashboard testid visible, then logged out successfully"
+    },
+    {
+      "criterion": "Demo mode remains available separately from authenticated workspaces",
+      "name": "demo-mode-accessible",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Login page 'Explore Demo mode' link navigates to /demo/student without auth; /demo/student/pariksha shows 'Demo assessment' label; /demo/employer loads without a session"
+    },
+    {
+      "criterion": "Public opportunity discovery remains usable",
+      "name": "public-opportunities-discovery",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "/opportunities search + AYUSH-system filter change the result count; /opportunities/ayurveda-quality detail page shows match score, mentor, deliverable and 'Simulated verification complete' label"
+    }
+  ],
+  "bugs": [],
+  "action_items": [],
+  "notes": [
+    "7 acceptance criteria in the briefing (within the 8-criterion guideline); each got a browser check, and the 4 API-bearing criteria (student login, opportunities/applications, assessment, role logins) additionally got a backend pytest file.",
+    "Backend logs contained a stale NameError ('db' is not defined) from before an earlier fix to routers/opportunities.py; current code uses get_pool() correctly and all endpoints returned 200/201 in this run — not a live bug.",
+    "protected-route-role-enforcement reports one console 401 (expected: unauthenticated /auth/me probe on the initial /app/student visit before redirect) — not a functional failure."
+  ]
+}
