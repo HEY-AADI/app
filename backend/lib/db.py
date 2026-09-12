@@ -3,6 +3,7 @@
 import json
 import logging
 import os
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -81,12 +82,24 @@ async def init_schema() -> None:
         CREATE TABLE IF NOT EXISTS status_checks (
             id TEXT PRIMARY KEY, client_name TEXT NOT NULL, timestamp TIMESTAMPTZ NOT NULL
         );
+        CREATE TABLE IF NOT EXISTS student_profiles (
+            user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+            education TEXT NOT NULL, ayush_system TEXT NOT NULL, graduation_year INTEGER NOT NULL,
+            interests JSONB NOT NULL, skills JSONB NOT NULL, portfolio_evidence JSONB NOT NULL,
+            updated_at TIMESTAMPTZ NOT NULL
+        );
+        CREATE TABLE IF NOT EXISTS internship_checkins (
+            id TEXT PRIMARY KEY, internship_id TEXT NOT NULL REFERENCES internships(id) ON DELETE CASCADE,
+            week INTEGER NOT NULL, actor TEXT NOT NULL, meeting_frequency TEXT NOT NULL,
+            useful_feedback TEXT NOT NULL, reflection TEXT NOT NULL, created_at TIMESTAMPTZ NOT NULL,
+            UNIQUE(internship_id, week, actor)
+        );
         """
     )
 
 
 async def seed_demo_data() -> None:
-    from lib.demo_data import OPPORTUNITIES, PASSWORD, USERS
+    from lib.demo_data import OPPORTUNITIES, PASSWORD, PROFILE, USERS
 
     pool = get_pool()
     password_hash = hash_password(PASSWORD)
@@ -111,6 +124,37 @@ async def seed_demo_data() -> None:
             opportunity["system"], opportunity["mode"], opportunity["stipend"], opportunity["duration"], opportunity["match"],
             opportunity["skills"], opportunity["gaps"], opportunity["verified"], opportunity["mentor"], opportunity["deliverable"], opportunity["deadline"],
         )
+    await pool.execute(
+        """INSERT INTO student_profiles (user_id,education,ayush_system,graduation_year,interests,skills,portfolio_evidence,updated_at)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,NOW()) ON CONFLICT (user_id) DO NOTHING""",
+        "demo-student", PROFILE["education"], PROFILE["ayush_system"], PROFILE["graduation_year"],
+        PROFILE["interests"], PROFILE["skills"], PROFILE["portfolio_evidence"],
+    )
+    application_id = await pool.fetchval(
+        """INSERT INTO applications (id,user_id,opportunity_id,opportunity_title,organisation,status,next_action,applied_at)
+           VALUES ('demo-active-application','demo-student','ayurveda-quality','Ayurveda Quality Associate','Arogya Botanicals','Joined','Complete the Week 4 check-in.',NOW())
+           ON CONFLICT (user_id,opportunity_id) DO UPDATE SET status='Joined',next_action='Complete the Week 4 check-in.'
+           RETURNING id"""
+    )
+    milestones = [
+        {"id": "applied", "title": "Application submitted", "detail": "Application accepted.", "status": "complete", "date": "19 Feb"},
+        {"id": "mentor", "title": "Mentor assigned", "detail": "Dr. Rahul Mehta", "status": "complete", "date": "20 Feb"},
+        {"id": "deliverable", "title": "Deliverable defined", "detail": "QA workflow documentation", "status": "active", "date": "26 Feb"},
+        {"id": "evidence", "title": "Evidence pack", "detail": "Generated after final evaluation.", "status": "upcoming", "date": "16 Apr"},
+    ]
+    internship_id = await pool.fetchval(
+        """INSERT INTO internships (id,user_id,application_id,opportunity_title,organisation,week,total_weeks,mentor,deliverable,divergence_alert,milestones)
+           VALUES ('demo-active-internship','demo-student',$1,'Ayurveda Quality Associate','Arogya Botanicals',4,8,'Dr. Rahul Mehta','Create a documented QA workflow for one selected production process.',FALSE,$2)
+           ON CONFLICT (application_id) DO UPDATE SET week=4,total_weeks=8,mentor=EXCLUDED.mentor,deliverable=EXCLUDED.deliverable,milestones=EXCLUDED.milestones
+           RETURNING id""",
+        application_id, milestones,
+    )
+    await pool.execute(
+        """INSERT INTO internship_checkins (id,internship_id,week,actor,meeting_frequency,useful_feedback,reflection,created_at)
+           VALUES ('demo-mentor-checkin',$1,4,'mentor','Weekly','Yes','Weekly review completed; documentation structure is improving.',$2)
+           ON CONFLICT (internship_id,week,actor) DO UPDATE SET meeting_frequency=EXCLUDED.meeting_frequency,useful_feedback=EXCLUDED.useful_feedback,reflection=EXCLUDED.reflection""",
+        internship_id, datetime.now(timezone.utc),
+    )
 
 
 async def init_database() -> None:

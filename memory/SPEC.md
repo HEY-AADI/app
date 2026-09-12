@@ -17,13 +17,16 @@ Authentication, opportunity/application/internship persistence and adaptive Pari
 - Public homepage → opportunities → opportunity detail → explainable match → apply → My Experience / Karma tracker
 - Student workspace → Pariksha readiness → Yojana recommendations → Alumni/Mentors → Pramana Career Passport
 - Karma shows mentor, defined deliverable, check-in divergence alert, evidence pack preview and credential preview
+- Student Profile saves education, AYUSH system, interests, skills with provenance, and portfolio evidence
+- The Skill Graph turns assessment gaps into career pathways and links to authoritative certification sources with availability disclaimers
+- Karma persists separate student and mentor Week 4 check-ins, calculates divergence, and downloads a generated evidence pack
 - Role switcher previews employer, alumni, institution and ministry dashboards with aggregate mock analytics
 
 ## Data model
-PostgreSQL tables: users, sessions, opportunities, applications, internships, assessment_results and status_checks. Demo fallback data remains in `frontend/src/data/mock.ts` for the public `/demo/*` experience. Auth sessions are random httpOnly cookies with seven-day expiry. Passwords are PBKDF2-SHA256 hashed server-side.
+PostgreSQL tables: users, sessions, student_profiles, opportunities, applications, internships, internship_checkins, assessment_results and status_checks. Demo fallback data remains in `frontend/src/data/mock.ts` for the public `/demo/*` experience. Auth sessions are random httpOnly cookies with seven-day expiry. Passwords are PBKDF2-SHA256 hashed server-side.
 
 ## Auth and roles
-Seeded email/password accounts exist for student, employer, alumni/mentor, institution and ministry roles. `/app/*` is protected by server-validated sessions; `/demo/*` remains the clearly labelled mock persona experience.
+Seeded email/password accounts exist for student, employer, alumni/mentor, institution and ministry roles. `/app/*` is protected by server-validated sessions; `/demo/*` remains the clearly labelled mock persona experience. Credentials are documented in `README.md` and `memory/test_credentials.md`, never rendered in the application UI.
 
 ## Assessment
-Pariksha has a 12-question question bank across clinical, AYUSH knowledge, communication, digital, industry and research domains. Submissions compute domain readiness, gaps and recommendations and persist the latest result for the signed-in student.
+Pariksha has 25 required questions: 20 core MCQs, 2 assertion–reasoning questions, 2 case-based questions and 1 scenario-based question. Submissions compute domain readiness, gaps and recommendations and persist the latest result for the signed-in student.

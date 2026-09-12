@@ -44,7 +44,12 @@ export default function DashboardShell({ children, role, onRoleChange, mode = "d
 }
 
 function StudentNav({ prefix, pathname }: { prefix: string; pathname: string }) {
-  return <>{navItems.map(([label, slug]) => {
+  const items: readonly (readonly [string, string])[] = prefix === "/app" ? [
+    ["Overview", "overview"], ["Profile", "profile"], ["Skill Graph", "skills"],
+    ["Pariksha", "pariksha"], ["My Experience", "karma"], ["Alumni", "alumni"],
+    ["Mentors", "mentors"], ["Career Passport", "pramana"],
+  ] : navItems;
+  return <>{items.map(([label, slug]) => {
     const href = slug === "opportunities" ? `${prefix}/student` : `${prefix}/student/${slug}`;
     const active = pathname.includes(slug) || (slug === "overview" && pathname === `${prefix}/student`);
     return <Link key={slug} to={href} className={`flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${active ? "bg-emerald-50 text-[#0B3C2A]" : "text-slate-600 hover:bg-slate-50 hover:text-[#0B3C2A]"}`} data-testid={`sidebar-nav-${slug}`}><span>{label}</span>{active && <ChevronRight size={15} />}</Link>;

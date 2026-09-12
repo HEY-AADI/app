@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -10,6 +11,8 @@ class AssessmentQuestion(BaseModel):
     skill: str
     options: list[str]
     difficulty: int = Field(ge=1, le=3)
+    question_type: Literal["mcq", "assertion_reasoning", "case_based", "scenario_based"] = "mcq"
+    context: str | None = None
 
 
 class AssessmentAnswer(BaseModel):

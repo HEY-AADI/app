@@ -13,3 +13,18 @@ OPPORTUNITIES = [
     {"id": "panchakarma-clinic", "type": "Internship", "title": "Panchakarma Clinical Intern", "organisation": "Svastha Ayurveda Centre", "location": "Bengaluru, Karnataka", "system": "Ayurveda", "mode": "On-site", "stipend": "₹10,000 / month", "duration": "12 weeks", "match": 81, "skills": ["Panchakarma", "Patient communication", "Clinical observation", "Documentation"], "gaps": ["Case presentation", "Digital health records"], "verified": True, "mentor": "Dr. Kavya Menon", "deliverable": "Prepare a supervised patient-care observation portfolio.", "deadline": "25 Mar 2026"},
     {"id": "digital-ayush", "type": "Project", "title": "Digital AYUSH Research Fellow", "organisation": "Sutradhar Health Systems", "location": "Remote · India", "system": "Cross-system", "mode": "Remote", "stipend": "₹12,000 / month", "duration": "10 weeks", "match": 74, "skills": ["Research methods", "Healthcare documentation", "Communication", "Data literacy"], "gaps": ["Evidence synthesis", "Digital health"], "verified": True, "mentor": "Meera Iyer", "deliverable": "Build a structured literature map for an AYUSH care pathway.", "deadline": "02 Apr 2026"},
 ]
+
+PROFILE = {
+    "education": "Bachelor of Ayurvedic Medicine and Surgery (BAMS) · Final year",
+    "ayush_system": "Ayurveda",
+    "graduation_year": 2026,
+    "interests": ["Quality assurance", "Clinical operations", "Research"],
+    "skills": [
+        {"name": "Panchakarma", "level": 82, "provenance": "Employer verified", "evidence": "Clinical observation portfolio"},
+        {"name": "Clinical documentation", "level": 76, "provenance": "Institution verified", "evidence": "Reviewed case records"},
+        {"name": "GMP fundamentals", "level": 51, "provenance": "Self-declared", "evidence": "Learning pathway in progress"},
+    ],
+    "portfolio_evidence": [
+        {"title": "Clinical observation portfolio", "issuer": "National Institute of Ayurveda", "evidence_type": "Project", "date": "2026-01-12"},
+    ],
+}

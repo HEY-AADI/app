@@ -73,7 +73,7 @@ async def my_applications(user: dict = Depends(get_current_user)):
 
 @router.get("/internships/me", response_model=list[InternshipOut])
 async def my_internships(user: dict = Depends(get_current_user)):
-    rows = await get_pool().fetch("SELECT id,application_id,opportunity_title,organisation,week,total_weeks,mentor,deliverable,divergence_alert,milestones FROM internships WHERE user_id=$1 ORDER BY id LIMIT 100", user["id"])
+    rows = await get_pool().fetch("SELECT id,application_id,opportunity_title,organisation,week,total_weeks,mentor,deliverable,divergence_alert,milestones FROM internships WHERE user_id=$1 ORDER BY week DESC,id LIMIT 100", user["id"])
     return [InternshipOut(**dict(row)) for row in rows]
 
 

@@ -12,6 +12,8 @@ from lib.db import close_database, get_pool, init_database
 from routers.assessments import router as assessments_router
 from routers.auth import router as auth_router
 from routers.opportunities import router as opportunities_router
+from routers.profile import router as profile_router
+from routers.karma import router as karma_router
 
 load_dotenv()
 
@@ -58,6 +60,8 @@ async def get_status_checks():
 api_router.include_router(auth_router)
 api_router.include_router(opportunities_router)
 api_router.include_router(assessments_router)
+api_router.include_router(profile_router)
+api_router.include_router(karma_router)
 
 app.add_middleware(
     CORSMiddleware,

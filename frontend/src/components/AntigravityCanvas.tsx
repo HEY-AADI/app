@@ -41,7 +41,7 @@ export default function AntigravityCanvas() {
         const y = baseY + (dy / Math.max(distance, 1)) * force * 16 + Math.sin(time / 1200 + dot.phase) * 2;
         context.beginPath();
         context.arc(x, y, index % 5 === 0 ? 2.4 : 1.3, 0, Math.PI * 2);
-        context.fillStyle = index % 5 === 0 ? "rgba(217,119,6,.38)" : "rgba(255,255,255,.24)";
+        context.fillStyle = index % 5 === 0 ? "rgba(197,139,42,.28)" : "rgba(23,74,58,.13)";
         context.fill();
       });
       frame = requestAnimationFrame(draw);

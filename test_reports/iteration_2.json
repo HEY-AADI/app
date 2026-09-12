@@ -1,0 +1,108 @@
+{
+  "iteration": 2,
+  "summary": "Verified all 8 acceptance criteria from the latest briefing (white-first homepage/Ministry branding, hidden demo credentials, 25-question Pariksha structure + persistence, profile editing persistence, Skill Graph certification sources, Karma two-sided check-ins/divergence, evidence pack download). 3 new/updated backend pytest files (14 assertions total across the suite) + 8 named browser checks, all passing.",
+  "passed": 11,
+  "failed": 0,
+  "retest_needed": false,
+  "checks": [
+    {
+      "criterion": "The public homepage is white-first and the Ministry of Ayush identity is visibly rendered",
+      "name": "homepage-white-first-ministry-branding",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "At 1280px hero section and body background resolved to off-white RGB (>230,230,230); home-header-ministry-logo image loaded with naturalWidth>0; ministry label text 'Ministry of Ayush' visible; hero-explore-opportunities-button and hero-assess-skills-button both visible/usable"
+    },
+    {
+      "criterion": "Demo credentials are not exposed in the web application",
+      "name": "login-form-no-exposed-credentials",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "login-email-input and login-password-input started empty; page body contained no 'student@demo.samanvaya.in', 'AyushDemo@2026', or quick-fill controls; manually typing the seeded credentials and submitting redirected to authenticated-student-workspace"
+    },
+    {
+      "criterion": "Pariksha contains the requested detailed 25-question structure",
+      "name": "test_tscheck_assessment_submit.py::test_questions_have_25_question_detailed_structure",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "GET /api/assessments/questions -> 200, 25 questions; type Counter == {mcq:20, assertion_reasoning:2, case_based:2, scenario_based:1}"
+    },
+    {
+      "criterion": "Pariksha contains the requested detailed 25-question structure",
+      "name": "pariksha-25-question-assessment-persists",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Walked all 25 questions via UI; assessment-question-type breakdown counted 20 Multiple choice / 2 Assertion-reasoning / 2 Case-based / 1 Scenario-based; assessment-progress-label showed '25 answered · 25 total' before submit was enabled"
+    },
+    {
+      "criterion": "Pariksha results persist after the detailed assessment",
+      "name": "test_tscheck_assessment_submit.py::test_submit_all_25_answers_persists_result",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "Submitting fewer than 25 answers -> 422; POST /api/assessments/submit (all 25, all correct) -> 200 readiness=100, skill_scores populated, gaps=[]; GET /api/assessments/latest on a fresh request -> same result id, readiness=100"
+    },
+    {
+      "criterion": "Pariksha results persist after the detailed assessment",
+      "name": "pariksha-25-question-assessment-persists",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "After submit, assessment-result-page rendered readiness/breakdown/gaps/recommendations; page reload plus a fresh GET /api/assessments/latest returned a non-null result with numeric readiness and array gaps/recommendations"
+    },
+    {
+      "criterion": "Student profile editing persists provenance-backed data",
+      "name": "test_tscheck_profile_update.py",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "PATCH /api/profile/me (education/ayush_system=Siddha/graduation_year=2027/interests/skill with provenance=Employer verified/portfolio evidence) -> 200; fresh GET /api/profile/me returned identical persisted values; employer role GET /api/profile/me -> 403; seeded profile restored afterward"
+    },
+    {
+      "criterion": "Student profile editing persists provenance-backed data",
+      "name": "student-profile-editing-persists",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Edited education/AYUSH system (Unani)/graduation year (2028)/interests, added a skill with provenance='Institution verified'+evidence and a portfolio evidence row, saved (profile-save-status='Profile saved'), then reloaded the page and all fields including the new skill/provenance/evidence still showed the saved values"
+    },
+    {
+      "criterion": "The Skill Graph recommends credible certification sources honestly",
+      "name": "skill-graph-credible-certification-sources",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "skill-graph-visual and skill-graph-gap-note connected an assessment/profile gap to a career pathway; certification-recommendations section text included HSS(C) Panchakarma Assistant, National Institute of Ayurveda, and National Institute of Open Schooling references plus 'Verify current eligibility...' disclaimer; 3 certification-source-link-* anchors all pointed to https:// external URLs"
+    },
+    {
+      "criterion": "Karma supports two-sided check-ins and divergence alerts",
+      "name": "test_tscheck_karma_checkins.py::test_student_checkin_persists_alongside_mentor_and_flags_divergence",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "GET /api/internships/{id}/check-ins?week=4 showed seeded mentor Weekly/Yes; POST a conflicting student Never/No check-in -> 200 with both student and mentor sides present and divergence_alert=true; re-fetch on a fresh request confirmed both persisted separately; employer role GET check-ins -> 403"
+    },
+    {
+      "criterion": "Karma supports two-sided check-ins and divergence alerts",
+      "name": "karma-two-sided-checkin-divergence",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "mentor-checkin-card showed seeded 'Weekly'/'Yes' mentor response distinct from the student form; submitting student Week 4 response (Never/No) via checkin-submit-button surfaced karma-divergence-status text 'Divergence detected' while mentor card still showed 'Weekly'"
+    },
+    {
+      "criterion": "The internship evidence pack is downloadable",
+      "name": "test_tscheck_karma_checkins.py::test_evidence_pack_download_contains_both_sides",
+      "lane": "backend",
+      "status": "passed",
+      "evidence": "GET /api/internships/{id}/evidence-pack -> 200 with opportunity_title, deliverable, mentor_assessment, student_reflection all populated and completion_status containing 'Week 4'"
+    },
+    {
+      "criterion": "The internship evidence pack is downloadable",
+      "name": "evidence-pack-download",
+      "lane": "browser",
+      "status": "passed",
+      "evidence": "Clicking evidence-pack-download-button triggered a browser download named samanvaya-evidence-pack.txt whose contents included the internship title, deliverable, mentor assessment, student reflection and 'Week X of Y' completion status"
+    }
+  ],
+  "bugs": [],
+  "action_items": [],
+  "notes": [
+    "8 acceptance criteria in this iteration's briefing (at the 8-criterion guideline limit); each got a browser check, and the 6 API-bearing criteria (25-question structure, results persistence, profile editing, Karma check-ins/divergence, evidence pack) additionally got backend pytest coverage across 3 files (test_tscheck_assessment_submit.py updated for the new 25-question bank, plus new test_tscheck_profile_update.py and test_tscheck_karma_checkins.py).",
+    "Full backend suite (7 files, 14 tests) passes: python -m pytest -q -p no:cacheprovider -> '14 passed in 2.52s'.",
+    "The seeded Week 4 internship's divergence_alert was already true at the start of this run because a prior student check-in row exists from earlier interactions with this same seeded row (upsert on internship_id+week+actor) — this is expected persistence behavior for the criterion, not a defect; the new checks assert on the row transitions they themselves drive.",
+    "Superseded artifacts from the previous 12-question Pariksha slice (browser check 'pariksha-assessment-flow' and its backend test target) were left untouched on disk but are not part of this iteration's criteria coverage since the question bank is now 25 questions; the updated test_tscheck_assessment_submit.py already reflects the new structure."
+  ]
+}

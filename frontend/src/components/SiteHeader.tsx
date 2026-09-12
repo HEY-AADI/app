@@ -11,7 +11,7 @@ export default function SiteHeader({ role = "student", onRoleChange }: { role?: 
     <>
       <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-[#F8FAF6]/95 backdrop-blur-md" data-testid="site-header">
         <div className="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
-          <Link to="/" aria-label="SAMANVAYA home" data-testid="header-home-link"><BrandMark /></Link>
+          <Link to="/" aria-label="SAMANVAYA home" data-testid="header-home-link"><BrandMark testIdPrefix="site-header" /></Link>
           <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary navigation" data-testid="primary-navigation">
             {[["Explore", "/how-it-works"], ["Opportunities", "/opportunities"], ["Internships", "/opportunities?type=internship"], ["Alumni", "/alumni"], ["Mentors", "/mentors"]].map(([label, href]) => (
               <Link key={href} to={href} className="text-sm font-medium text-slate-600 transition-colors hover:text-[#0B3C2A]" data-testid={`header-nav-${label.toLowerCase()}`}>{label}</Link>

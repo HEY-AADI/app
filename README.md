@@ -193,3 +193,15 @@ local-run instructions above.
   Vite HMR for the frontend); no rebuild step needed for normal iteration. A
   restart is still needed after changing `.env`, `requirements.txt`, or
   `vite.config.ts`.
+
+## SAMANVAYA seeded accounts
+
+All seeded accounts use the password `AyushDemo@2026`.
+
+- Student: `student@demo.samanvaya.in`
+- Employer: `employer@demo.samanvaya.in`
+- Alumni / Mentor: `alumni@demo.samanvaya.in`
+- Institution: `institution@demo.samanvaya.in`
+- Ministry: `ministry@demo.samanvaya.in`
+
+These credentials are intentionally documented here for evaluators and automated checks, not displayed in the web application.
