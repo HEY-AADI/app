@@ -16,13 +16,13 @@ def _opportunity(document: dict) -> OpportunityOut:
 
 @router.get("/opportunities", response_model=list[OpportunityOut])
 async def list_opportunities():
-    rows = await get_pool().fetch("SELECT id,type,title,organisation,location,system,mode,stipend,duration,match,skills,gaps,verified,mentor,deliverable,deadline FROM opportunities ORDER BY match DESC LIMIT 100")
+    rows = await get_pool().fetch("SELECT id,type,title,organisation,location,system,mode,stipend,duration,match,skills,gaps,verified,mentor,deliverable,deadline,eligibility,accessibility FROM opportunities WHERE publication_status='published' ORDER BY match DESC LIMIT 100")
     return [_opportunity(dict(row)) for row in rows]
 
 
 @router.get("/opportunities/{opportunity_id}", response_model=OpportunityOut)
 async def get_opportunity(opportunity_id: str):
-    row = await get_pool().fetchrow("SELECT id,type,title,organisation,location,system,mode,stipend,duration,match,skills,gaps,verified,mentor,deliverable,deadline FROM opportunities WHERE id=$1", opportunity_id)
+    row = await get_pool().fetchrow("SELECT id,type,title,organisation,location,system,mode,stipend,duration,match,skills,gaps,verified,mentor,deliverable,deadline,eligibility,accessibility FROM opportunities WHERE id=$1 AND publication_status='published'", opportunity_id)
     document = dict(row) if row else None
     if not document:
         raise HTTPException(status_code=404, detail="Opportunity not found")

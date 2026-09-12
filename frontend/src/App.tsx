@@ -12,6 +12,8 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import StudentProfilePage from "@/pages/StudentProfile";
 import SkillGraph from "@/pages/SkillGraph";
 import Karma from "@/pages/Karma";
+import CareerPassport from "@/pages/CareerPassport";
+import EmployerWorkflow from "@/pages/EmployerWorkflow";
 
 // One <Route> per page in src/pages; BrowserRouter already wraps this in main.tsx.
 export default function App() {
@@ -28,7 +30,10 @@ export default function App() {
       <Route path="/app/student/profile" element={<ProtectedRoute role="student"><StudentProfilePage /></ProtectedRoute>} />
       <Route path="/app/student/skills" element={<ProtectedRoute role="student"><SkillGraph /></ProtectedRoute>} />
       <Route path="/app/student/karma" element={<ProtectedRoute role="student"><Karma /></ProtectedRoute>} />
+      <Route path="/app/student/pramana" element={<ProtectedRoute role="student"><CareerPassport /></ProtectedRoute>} />
       <Route path="/app/student/*" element={<ProtectedRoute role="student"><Platform role="student" mode="real" /></ProtectedRoute>} />
+      <Route path="/app/employer" element={<ProtectedRoute role="employer"><EmployerWorkflow /></ProtectedRoute>} />
+      <Route path="/app/employer/opportunities" element={<ProtectedRoute role="employer"><EmployerWorkflow /></ProtectedRoute>} />
       <Route path="/app/employer/*" element={<ProtectedRoute role="employer"><Platform role="employer" mode="real" /></ProtectedRoute>} />
       <Route path="/app/alumni/*" element={<ProtectedRoute role="alumni"><Platform role="alumni" mode="real" /></ProtectedRoute>} />
       <Route path="/app/institution/*" element={<ProtectedRoute role="institution"><Platform role="institution" mode="real" /></ProtectedRoute>} />

@@ -28,6 +28,8 @@ export interface PersistedOpportunity {
   mentor: string;
   deliverable: string;
   deadline: string;
+  eligibility: string;
+  accessibility: string;
 }
 
 export interface PersistedApplication {
@@ -69,3 +71,23 @@ export type StudentProfileUpdate = Omit<StudentProfile, "user_id" | "name" | "em
 export interface CheckIn { id: string; internship_id: string; week: number; actor: "student" | "mentor"; meeting_frequency: "Never" | "Once" | "Weekly"; useful_feedback: "Yes" | "Partially" | "No"; reflection: string; created_at: string }
 export interface CheckInSummary { internship_id: string; week: number; student: CheckIn | null; mentor: CheckIn | null; divergence_alert: boolean }
 export interface EvidencePack { internship_id: string; opportunity_title: string; organisation: string; deliverable: string; performance_metric: string; mentor_assessment: string; student_reflection: string; completion_status: string; generated_at: string }
+
+export interface CareerPassportDocument { filename: string; media_type: string; content_base64: string }
+
+export interface EmployerOpportunityCreate {
+  type: "Internship" | "Job" | "Project";
+  title: string;
+  system: string;
+  skills: string[];
+  eligibility: string;
+  stipend: string;
+  location: string;
+  mode: "Hybrid" | "On-site" | "Remote";
+  duration: string;
+  mentor: string;
+  deliverable: string;
+  accessibility: string;
+  deadline: string;
+}
+export interface EmployerOpportunity extends EmployerOpportunityCreate { id: string; organisation: string; publication_status: "draft" | "published"; application_count: number }
+export interface EmployerCandidate { application_id: string; opportunity_id: string; candidate_code: string; status: "Applied" | "Under Review" | "Shortlisted" | "Interview" | "Selected" | "Rejected" | "Joined" | "Completed"; readiness: number; skills: SkillEntry[]; evidence_count: number; name: string | null; email: string | null; institution: string | null; identity_revealed: boolean; institution_revealed: boolean }

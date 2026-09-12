@@ -33,3 +33,9 @@ class StudentProfileOut(StudentProfileUpdate):
     email: str
     institution: str | None = None
     updated_at: datetime
+
+
+class CareerPassportDocument(BaseModel):
+    filename: str
+    media_type: str
+    content_base64: str

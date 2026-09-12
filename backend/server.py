@@ -14,6 +14,7 @@ from routers.auth import router as auth_router
 from routers.opportunities import router as opportunities_router
 from routers.profile import router as profile_router
 from routers.karma import router as karma_router
+from routers.employer import router as employer_router
 
 load_dotenv()
 
@@ -62,6 +63,7 @@ api_router.include_router(opportunities_router)
 api_router.include_router(assessments_router)
 api_router.include_router(profile_router)
 api_router.include_router(karma_router)
+api_router.include_router(employer_router)
 
 app.add_middleware(
     CORSMiddleware,

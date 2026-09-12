@@ -57,6 +57,10 @@ async def init_schema() -> None:
             duration TEXT NOT NULL, match INTEGER NOT NULL, skills JSONB NOT NULL, gaps JSONB NOT NULL,
             verified BOOLEAN NOT NULL, mentor TEXT NOT NULL, deliverable TEXT NOT NULL, deadline TEXT NOT NULL
         );
+        ALTER TABLE opportunities ADD COLUMN IF NOT EXISTS eligibility TEXT NOT NULL DEFAULT 'Relevant AYUSH qualification';
+        ALTER TABLE opportunities ADD COLUMN IF NOT EXISTS accessibility TEXT NOT NULL DEFAULT 'Contact the employer for accessibility information';
+        ALTER TABLE opportunities ADD COLUMN IF NOT EXISTS created_by TEXT REFERENCES users(id) ON DELETE SET NULL;
+        ALTER TABLE opportunities ADD COLUMN IF NOT EXISTS publication_status TEXT NOT NULL DEFAULT 'published';
         CREATE INDEX IF NOT EXISTS opportunities_match_idx ON opportunities(match DESC);
         CREATE TABLE IF NOT EXISTS applications (
             id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -124,6 +128,7 @@ async def seed_demo_data() -> None:
             opportunity["system"], opportunity["mode"], opportunity["stipend"], opportunity["duration"], opportunity["match"],
             opportunity["skills"], opportunity["gaps"], opportunity["verified"], opportunity["mentor"], opportunity["deliverable"], opportunity["deadline"],
         )
+    await pool.execute("UPDATE opportunities SET created_by='demo-employer',publication_status='published' WHERE created_by IS NULL")
     await pool.execute(
         """INSERT INTO student_profiles (user_id,education,ayush_system,graduation_year,interests,skills,portfolio_evidence,updated_at)
            VALUES ($1,$2,$3,$4,$5,$6,$7,NOW()) ON CONFLICT (user_id) DO NOTHING""",
@@ -135,6 +140,11 @@ async def seed_demo_data() -> None:
            VALUES ('demo-active-application','demo-student','ayurveda-quality','Ayurveda Quality Associate','Arogya Botanicals','Joined','Complete the Week 4 check-in.',NOW())
            ON CONFLICT (user_id,opportunity_id) DO UPDATE SET status='Joined',next_action='Complete the Week 4 check-in.'
            RETURNING id"""
+    )
+    await pool.execute(
+        """INSERT INTO applications (id,user_id,opportunity_id,opportunity_title,organisation,status,next_action,applied_at)
+           VALUES ('demo-blind-application','demo-student','panchakarma-clinic','Panchakarma Clinical Intern','Svastha Ayurveda Centre','Under Review','Employer review in progress.',NOW())
+           ON CONFLICT (user_id,opportunity_id) DO UPDATE SET status='Under Review',next_action='Employer review in progress.'"""
     )
     milestones = [
         {"id": "applied", "title": "Application submitted", "detail": "Application accepted.", "status": "complete", "date": "19 Feb"},

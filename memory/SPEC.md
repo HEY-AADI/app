@@ -19,11 +19,15 @@ Authentication, opportunity/application/internship persistence and adaptive Pari
 - Karma shows mentor, defined deliverable, check-in divergence alert, evidence pack preview and credential preview
 - Student Profile saves education, AYUSH system, interests, skills with provenance, and portfolio evidence
 - The Skill Graph turns assessment gaps into career pathways and links to authoritative certification sources with availability disclaimers
+- Skill Graph certification sources can be filtered by AYUSH system, skill gap and provider
 - Karma persists separate student and mentor Week 4 check-ins, calculates divergence, and downloads a generated evidence pack
+- Employers create validated opportunity drafts, publish only after mentor/deliverable/stipend checks, and move applicants through skills-first stages
+- Blind-first employer review hides identity and institution initially, reveals name/contact after shortlist, and reveals institution at interview
+- Pramana renders the saved profile, assessment and internship evidence in-app and generates a downloadable PDF Career Passport
 - Role switcher previews employer, alumni, institution and ministry dashboards with aggregate mock analytics
 
 ## Data model
-PostgreSQL tables: users, sessions, student_profiles, opportunities, applications, internships, internship_checkins, assessment_results and status_checks. Demo fallback data remains in `frontend/src/data/mock.ts` for the public `/demo/*` experience. Auth sessions are random httpOnly cookies with seven-day expiry. Passwords are PBKDF2-SHA256 hashed server-side.
+PostgreSQL tables: users, sessions, student_profiles, opportunities (including draft/published ownership), applications, internships, internship_checkins, assessment_results and status_checks. Demo fallback data remains in `frontend/src/data/mock.ts` for the public `/demo/*` experience. Auth sessions are random httpOnly cookies with seven-day expiry. Passwords are PBKDF2-SHA256 hashed server-side.
 
 ## Auth and roles
 Seeded email/password accounts exist for student, employer, alumni/mentor, institution and ministry roles. `/app/*` is protected by server-validated sessions; `/demo/*` remains the clearly labelled mock persona experience. Credentials are documented in `README.md` and `memory/test_credentials.md`, never rendered in the application UI.

@@ -21,6 +21,8 @@ class OpportunityOut(BaseModel):
     mentor: str
     deliverable: str
     deadline: str
+    eligibility: str = "Relevant AYUSH qualification"
+    accessibility: str = "Contact the employer for accessibility information"
 
 
 class ApplicationOut(BaseModel):
