@@ -1,0 +1,113 @@
+{
+  "project_name": "SAMANVAYA",
+  "theme_and_identity": {
+    "mode": "Government-Grade Restrained Classic & Accessible",
+    "primary_archetype": "Government-Grade Deep Green & Warm Saffron",
+    "emotional_tone": "Institutional trust, modern administrative precision, heritage empowerment, inclusive growth",
+    "brand_unit": {
+      "ministry_name": "Ministry of Ayush",
+      "department": "National AYUSH Skill & Opportunity Platform (SAMANVAYA)",
+      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Logo_Ministry_of_AYUSH.png",
+      "emblem_alt": "Official Emblem of Ministry of Ayush, Government of India"
+    }
+  },
+  "typography": {
+    "heading_font": "Geist Variable, sans-serif",
+    "body_font": "Geist Variable, sans-serif",
+    "mono_font": "IBM Plex Mono, monospace",
+    "font_pairings_note": "Use Geist Variable with font-semibold / font-bold for authoritative government headings and crisp body text. IBM Plex Mono for verification hashes, scores, and credential IDs.",
+    "hierarchy": {
+      "h1": "text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-emerald-950 dark:text-emerald-50",
+      "h2": "text-2xl sm:text-3xl font-bold tracking-tight text-emerald-900 dark:text-emerald-100",
+      "h3": "text-xl sm:text-2xl font-semibold text-emerald-900 dark:text-emerald-200",
+      "h4": "text-lg font-semibold text-emerald-800 dark:text-emerald-300",
+      "body": "text-base leading-relaxed text-slate-700 dark:text-slate-300",
+      "small": "text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400"
+    }
+  },
+  "colors": {
+    "palette": {
+      "deep_green": "#0B3C2A",
+      "deep_green_hover": "#072B1E",
+      "saffron_gold": "#D97706",
+      "saffron_light": "#FEF3C7",
+      "cream_bg": "#F8FAF6",
+      "slate_dark": "#0F172A",
+      "border_light": "#E2E8F0",
+      "accent_emerald": "#059669",
+      "accent_amber": "#B45309"
+    },
+    "tailwind_mappings": {
+      "primary": "bg-[#0B3C2A] text-white hover:bg-[#072B1E]",
+      "secondary": "bg-[#D97706] text-white hover:bg-[#B45309]",
+      "accent": "bg-amber-100 text-amber-900 border border-amber-300",
+      "background_light": "bg-[#F8FAF6] text-slate-900",
+      "background_dark": "bg-[#0A1210] text-emerald-50",
+      "surface_card": "bg-white dark:bg-emerald-950/40 border border-emerald-900/10 dark:border-emerald-500/20 shadow-sm rounded-xl",
+      "status_success": "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-300",
+      "status_warning": "bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950 dark:text-amber-300",
+      "status_alert": "bg-rose-50 text-rose-800 border-rose-200 dark:bg-rose-950 dark:text-rose-300"
+    }
+  },
+  "layout_and_spacing": {
+    "container_padding": "px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto",
+    "card_padding": "p-5 sm:p-6",
+    "section_spacing": "py-12 sm:py-16 lg:py-20",
+    "grid_gap": "gap-6 sm:gap-8",
+    "border_radius": "rounded-xl"
+  },
+  "interactive_components": {
+    "role_switcher": {
+      "type": "Demo Persona Bar",
+      "position": "Top bar / Sticky Header subnav",
+      "roles": [
+        {"id": "student", "label": "Student", "badge": "Ananya Sharma (BAMS Final)"},
+        {"id": "employer", "label": "AYUSH Employer", "badge": "Dabur Research Labs"},
+        {"id": "alumni", "label": "Alumni / Mentor", "badge": "Dr. Rajesh Vaidya"},
+        {"id": "institution", "label": "Institution", "badge": "National Institute of Ayurveda"},
+        {"id": "ministry", "label": "Ministry Officer", "badge": "Ministry Admin"}
+      ]
+    },
+    "pariksha_assessment": {
+      "title": "Pariksha Readiness Assessment",
+      "features": ["Adaptive domain quiz preview", "Skill Radar Chart (Recharts)", "AI readiness score summary"]
+    },
+    "yojana_opportunities": {
+      "title": "Yojana Opportunity Finder",
+      "features": ["Explainable AI match score modal", "Domain filters (Ayurveda, Yoga, Unani, Siddha, Homeopathy)", "Instant apply drawer"]
+    },
+    "karma_tracker": {
+      "title": "Karma Internship & Milestone Tracker",
+      "features": ["Deliverable submission timeline", "Divergence alert indicator", "Mentor check-in log", "Evidence Pack generator & Credential Preview"]
+    },
+    "pramana_passport": {
+      "title": "Pramana Career Passport",
+      "features": ["Verified credentials drawer", "QR code verification badge", "PDF export preview"]
+    },
+    "antigravity_effect": {
+      "type": "Subtle Canvas / Motion Float particles",
+      "behavior": "Gentle cursor reactivity with floating golden-emerald nodes; automatically stops if prefers-reduced-motion is active"
+    }
+  },
+  "image_urls": {
+    "ministry_logo": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Logo_Ministry_of_AYUSH.png",
+    "hero_laboratory": "https://images.unsplash.com/photo-1760307837671-63ee641f9f1c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjV8MHwxfHNlYXJjaHwxfHxoZXJiYWwlMjByZXNlYXJjaCUyMGxhYm9yYXRvcnl8ZW58MHx8fHwxNzg5MTg0NzgxfDA&ixlib=rb-4.1.0&q=85",
+    "student_library": "https://images.unsplash.com/photo-1741699428220-65f37f3fbbcb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHw0fHx1bml2ZXJzaXR5JTIwc3R1ZGVudCUyMHN0dWR5aW5nfGVufDB8fHx8MTc4OTE4NDc4MXww&ixlib=rb-4.1.0&q=85",
+    "doctor_male": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NjZ8MHwxfHNlYXJjaHwxfHxheXVydmVkYSUyMHdlbGxuZXNzJTIwZG9jdG9yfGVufDB8fHx8MTc4OTE4NDc4MXww&ixlib=rb-4.1.0&q=85",
+    "doctor_female": "https://images.unsplash.com/photo-1659353888906-adb3e0041693?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwyfHxheXVydmVkYSUyMHdlbGxuZXNzJTIwZG9jdG9yfGVufDB8fHx8MTc4OTE4NDc4MXww&ixlib=rb-4.1.0&q=85"
+  },
+  "testing_and_accessibility": {
+    "data_testid_requirement": "All interactive buttons, role tabs, opportunity cards, form inputs, modal triggers, and navigation links MUST carry data-testid attributes (e.g. data-testid='role-switcher-student', data-testid='apply-opportunity-btn-1').",
+    "wcag_level": "WCAG 2.1 AA Compliant",
+    "contrast_ratio": "Minimum 4.5:1 for body text, 3:1 for large headers",
+    "reduced_motion": "Wrap particle / float effects in media query check or motion.div with reduced motion fallback"
+  },
+  "instructions_to_main_agent": [
+    "Build a clean, highly functional JS/React web frontend prototype with full mock data.",
+    "Prominently embed the official Ministry of Ayush logo alongside 'SAMANVAYA' title in the primary header.",
+    "Implement the Demo Persona Switcher at the top to seamlessly swap dashboard views between Student, Employer, Alumni, Institution, and Ministry.",
+    "Ensure all major flows (Pariksha, Yojana, Karma, Pramana) have rich mock datasets, interactive states, modals, and filters.",
+    "Include subtle cursor-reactive antigravity particle effect on the hero background with reduced motion compliance.",
+    "Use data-testid on every interactive element."
+  ]
+}
